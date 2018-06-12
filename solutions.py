@@ -18,8 +18,6 @@ def solution_1():
 
 
 def solution_2():
-    import csv
-
     with open('llc-workshop-data.csv') as csv_file:
         csv_data = csv.DictReader(csv_file)
 
@@ -37,8 +35,6 @@ def solution_2():
 
 
 def solution_3():
-    import csv
-
     with open('llc-workshop-data.csv') as csv_file:
         csv_data = csv.DictReader(csv_file)
 
@@ -47,7 +43,7 @@ def solution_3():
 
         for row in csv_data:
             if 'Girls Learning Code' in row['Event Name']:
-                if 'mentor' in row['Ticket Type']:
+                if 'mentor' in row['Ticket Type'] or 'Volunteer' in row['Ticket Type']:
                     mentor_sign_ups += int(row['Quantity'])
                 else:
                     attendee_sign_ups += int(row['Quantity'])
@@ -59,8 +55,6 @@ def solution_3():
 
 
 def write_to_file():
-    import csv
-
     with open('llc-workshop-data.csv') as csv_file:
         csv_data = csv.DictReader(csv_file)
 
@@ -75,8 +69,6 @@ def write_to_file():
 
 
 def find_types_from_filtered():
-    import csv
-
     with open('filtered-data.csv') as csv_file:
         csv_data = csv.DictReader(csv_file)
 
