@@ -1416,8 +1416,94 @@
         "Girls Learning Code" events
         * the ratio of mentors to attendees for "Girls Learning Code"
 
-        ```python
+        ### Hints
+        * use `with open('llc-workshop-data.csv'):` and `csv.DictReader` to open the file.
+        * loop and count
         
+      </script>
+    </section> 
+    
+    <section class="slide" data-markdown>
+      <script type="text/template">
+        ## Final Exercise - Collecting Stats !
+
+        * number of people signed up for "National Learn to Code Day"
+
+        ```python
+        import csv
+        
+        with open('llc-workshop-data.csv') as csv_file:
+          csv_data = csv.DictReader(csv_file)
+          
+          num_sign_ups = 0
+          
+          for row in csv_data:
+            if 'National Learn to Code Day' in row['Event Name']:
+              attendees = int(row['Quantity'])
+              num_sign_ups += attendees
+        
+          message = 'Number of attendees for National Learn to Code Day events: '
+          message += str(num_sign_ups)
+          print(message)
+        ```
+        
+      </script>
+    </section>
+    
+    
+    <section class="slide" data-markdown>
+      <script type="text/template">
+        ## Final Exercise - Collecting Stats !
+
+        * total number of people registered for "Kids Learning Code" or 
+        "Girls Learning Code" events
+
+        ```python
+        import csv
+        
+        with open('llc-workshop-data.csv') as csv_file:
+          csv_data = csv.DictReader(csv_file)
+          
+          num_sign_ups = 0
+          
+          for row in csv_data:
+            if 'Kids Learning Code' in row['Event Name'] or 'Girls Learning Code' in row['Event Name']:
+              attendees = int(row['Quantity'])
+              num_sign_ups += attendees
+        
+          message = 'Number of attendees for: '
+          message += str(num_sign_ups)
+          print(message)
+        ```
+        
+      </script>
+    </section>      
+    
+    <section class="slide" data-markdown>
+      <script type="text/template">
+        ## Final Exercise - Collecting Stats !
+
+        * the ratio of mentors to attendees for "Girls Learning Code"
+
+        ```python
+        import csv
+        
+        with open('llc-workshop-data.csv') as csv_file:
+          csv_data = csv.DictReader(csv_file)
+          
+          attendee_sign_ups = 0
+          mentor_sign_ups = 0
+          
+          for row in csv_data:
+            if 'Girls Learning Code' in row['Event Name']:
+              if 'mentor' in row['Ticket Type']:
+                mentor_sign_ups += int(row['Quantity'])
+              else:
+                attendee_sign_ups += int(row['Quantity'])
+        
+          print('Number of attendees: ' + str(attendee_sign_ups))
+          print('Number of mentors: ' + str(mentor_sign_ups))
+          print('Ratio of mentor to attendee: ' + str(mentor_sign_ups / attendee_sign_ups))
         ```
         
       </script>
