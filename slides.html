@@ -1376,7 +1376,7 @@
 <!-- -------------------- -->
     <section class="slide" data-markdown>
       <script type="text/template">
-        ## Final Exercise!
+        ## Exercise 7
 
         In order to promote **National Learn to Code Day**, and measure its 
         success relative to 2015, we'll need some stats:
@@ -1421,120 +1421,61 @@
         * loop and count
         
       </script>
-    </section> 
-    
-    <section class="slide" data-markdown>
-      <script type="text/template">
-        ## Final Exercise - Collecting Stats !
-
-        * number of people signed up for "National Learn to Code Day"
-
-        ```python
-        import csv
-        
-        with open('llc-workshop-data.csv') as csv_file:
-          csv_data = csv.DictReader(csv_file)
-          
-          num_sign_ups = 0
-          
-          for row in csv_data:
-            if 'National Learn to Code Day' in row['Event Name']:
-              attendees = int(row['Quantity'])
-              num_sign_ups += attendees
-        
-          message = 'Number of attendees for National Learn to Code Day events: '
-          message += str(num_sign_ups)
-          print(message)
-        ```
-        
-      </script>
     </section>
     
-    
     <section class="slide" data-markdown>
       <script type="text/template">
-        ## Final Exercise - Collecting Stats !
-
-        * total number of people registered for "Kids Learning Code" or 
-        "Girls Learning Code" events
-
+        ## Final Exercise - Filtering Data
+        
+        Let's figure out how effective was social media to interest people for "Girls Learning Code"
+        
+        * We'll need to open 2 sets of files at once, one for read and write.
+        * We'll start by filtering the data and writing out using a `csv.DictWriter()`.
+        * Note: the writer needs to know what our CSV header is.
+        
         ```python
         import csv
         
         with open('llc-workshop-data.csv') as csv_file:
           csv_data = csv.DictReader(csv_file)
-          
-          num_sign_ups = 0
-          
-          for row in csv_data:
-            if 'Kids Learning Code' in row['Event Name'] or 'Girls Learning Code' in row['Event Name']:
-              attendees = int(row['Quantity'])
-              num_sign_ups += attendees
         
-          message = 'Number of attendees for: '
-          message += str(num_sign_ups)
-          print(message)
+          with open('filtered-data.csv', 'w') as filtered_csv:
+            write_csv = csv.DictWriter(filtered_csv, csv_data.fieldnames)
+            write_csv.writeheader()
+        
+            for row in csv_data:
+              if 'Girls Learning Code' in row['Event Name']:
+                if row['How did you hear about this event?']:
+                  write_csv.writerow(row)
         ```
-        
-      </script>
-    </section>      
-    
-    <section class="slide" data-markdown>
-      <script type="text/template">
-        ## Final Exercise - Collecting Stats !
 
-        * the ratio of mentors to attendees for "Girls Learning Code"
-
-        ```python
-        import csv
-        
-        with open('llc-workshop-data.csv') as csv_file:
-          csv_data = csv.DictReader(csv_file)
-          
-          attendee_sign_ups = 0
-          mentor_sign_ups = 0
-          
-          for row in csv_data:
-            if 'Girls Learning Code' in row['Event Name']:
-              if 'mentor' in row['Ticket Type']:
-                mentor_sign_ups += int(row['Quantity'])
-              else:
-                attendee_sign_ups += int(row['Quantity'])
-        
-          print('Number of attendees: ' + str(attendee_sign_ups))
-          print('Number of mentors: ' + str(mentor_sign_ups))
-          print('Ratio of mentor to attendee: ' + str(mentor_sign_ups / attendee_sign_ups))
-        ```
-        
       </script>
-    </section>  
+    </section>
     
     <section class="slide" data-markdown>
       <script type="text/template">
         ## Final Exercise - Filtering Data
         
         * how effective was social media to interest people for "Girls Learning Code"
-
-      </script>
-    </section>
-    
-    <section class="slide" data-markdown>
-      <script type="text/template">
-        ## Approaching the Problem
-
-        What does the data say?
-        Let's [take a look](./exercises/llc-workshop-data.csv)!
-
-        **Pro tip!** Open the data in program like Excel or [LibreOffice Calc](https://www.libreoffice.org/) to see the data.
-
-        * Can you identify any interesting patterns?
-        * What are you interested in learning from the data?
-        * What do you want the output to be?
-        * What can we filter the data on?
-
-        So far we've seen examples where the output goes to the screen, but you might simply want to filter out a smaller
-        set of results and write them back to a new CSV (see `reference/writing_csv.py` for an example).
         
+        ```python
+        import csv
+        
+        with open('filtered-data.csv') as csv_file:
+          csv_data = csv.DictReader(csv_file)
+        
+          heard_in_tally = dict()
+          for row in csv_data:
+            heard_in = row['How did you hear about this event?']
+            if heard_in in heard_in_tally.keys():
+              heard_in_tally[heard_in] += 1
+            else:
+              heard_in_tally[heard_in] = 1
+           
+          for item in heard_in_tally.keys():
+            print(item + ": " + str(heard_in_tally[item]))
+        ```
+
       </script>
     </section>
 
